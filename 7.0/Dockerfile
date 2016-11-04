@@ -5,7 +5,7 @@ ENV COMPOSER_HOME /root/.composer
 ENV PATH $PATH:$COMPOSER_HOME/vendor/bin
 ENV DEBIAN_FRONTEND noninteractive
 ENV BUILD_DEPS "python-pip build-essential python-dev libssl-dev libffi-dev"
-ENV INSTALL_APT "ruby sudo python python-setuptools nodejs git unzip libxml2-utils"
+ENV INSTALL_APT "ruby sudo python python-setuptools nodejs git unzip libxml2-utils ssh"
 ENV INSTALL_PIP "yamllint flake8"
 ENV INSTALL_GEM "rubocop"
 ENV INSTALL_NPM "jsonlint"
@@ -19,6 +19,11 @@ RUN \
     && gem install $INSTALL_GEM \
     && pip install $INSTALL_PIP \
     && npm install $INSTALL_NPM -g \
+    && docker-php-ext-install bcmath \
+    && mkdir /root/.ssh \
+    && touch /root/.ssh/known_hosts \
+    && ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts \
+    && ssh-keyscan github.com >> /root/.ssh/known_hosts \
     && curl -O https://raw.githubusercontent.com/DealerDirect/php-qa-tools/master/bin/install.sh \
     && bash install.sh \
     && rm -f install.sh \
