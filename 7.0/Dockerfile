@@ -28,6 +28,7 @@ RUN \
     && ssh-keyscan github.com >> /root/.ssh/known_hosts \
     && curl -O https://raw.githubusercontent.com/DealerDirect/php-qa-tools/master/bin/install.sh \
     && bash install.sh \
+    && composer global require "scrutinizer/ocular" \
     && rm -f install.sh \
     && apt-get remove -y --purge $BUILD_DEPS \
     && apt-get -y purge \
