@@ -20,6 +20,8 @@ RUN \
     && pip install $INSTALL_PIP \
     && npm install $INSTALL_NPM -g \
     && docker-php-ext-install bcmath \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     && mkdir /root/.ssh \
     && touch /root/.ssh/known_hosts \
     && ssh-keyscan bitbucket.org >> /root/.ssh/known_hosts \
